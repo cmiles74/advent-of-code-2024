@@ -6,14 +6,7 @@ import ("bufio"
 	"sort"
 	"strconv"
 	"strings"
-	"time")
-
-func timer(name string) func() {
-	start := time.Now()
-	return func() {
-		fmt.Printf("%s completed %v\n", name, time.Since(start))
-	}
-}
+	"cmiles74/util")
 
 func load_sample() ([]int, []int){
 	return []int{3, 4, 2, 1, 3, 3}, []int{4, 3, 5, 3, 9, 3}
@@ -113,11 +106,11 @@ func part_2() {
 
 func main() {
 	fmt.Println("Part 1 - Sum of Distances:")
-	defer timer("Part 1")()
+	defer util.Timer("Part 1")()
 	part_1()
 
 	fmt.Println("\nPart 2 - Sum of Occurences:")
-	defer timer("Part 2")()
+	defer util.Timer("Part 2")()
 	part_2()
 	fmt.Println("\n----")
 }
