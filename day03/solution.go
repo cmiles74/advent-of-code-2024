@@ -26,7 +26,7 @@ func load_input(filename string) ([]string) {
 }
 
 func scan_memory(memory string) ([]string) {
-	instructions := make([]string, 0)
+	instructions := []string{}
 	re := regexp.MustCompile(`mul\([0-9]{1,3},[0-9]{1,3}\)`)
 	for _, instruction := range re.FindAllString(memory, -1) {
 		instructions = append(instructions, instruction)
@@ -36,7 +36,7 @@ func scan_memory(memory string) ([]string) {
 }
 
 func scan_memory_all_instructions(memory string) ([]string) {
-	instructions := make([]string, 0)
+	instructions := []string{}
 	re := regexp.MustCompile(`(mul\([0-9]{1,3},[0-9]{1,3}\))|(do\(\))|(don't\(\))`)
 	for _, instruction := range re.FindAllString(memory, -1) {
 		instructions = append(instructions, instruction)

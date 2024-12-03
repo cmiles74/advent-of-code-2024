@@ -109,7 +109,7 @@ func report_safe(debug bool, report []int) (bool) {
 }
 
 func remove_index(report []int, index int) ([]int) {
-	report_new := make([]int, 0)
+	report_new := []int{}
 	report_new = append(report_new, report[:index]...)
 	report_new = append(report_new, report[index + 1:]...)
 	return report_new
