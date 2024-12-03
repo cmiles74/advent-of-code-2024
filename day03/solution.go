@@ -10,8 +10,7 @@ import ("bufio"
 
 func load_sample() ([]string) {
 	return []string{
-		"xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)",
-		"+mul(32,64]then(mul(11,8)mul(8,5))"}
+		"xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"}
 }
 
 func load_input(filename string) ([]string) {
@@ -36,6 +35,16 @@ func scan_memory(memory string) ([]string) {
 	return instructions
 }
 
+func scan_memory_all_instructions(memory string) ([]string) {
+	instructions := make([]string, 0)
+	re := regexp.MustCompile(`(mul\([0-9]{1,3},[0-9]{1,3}\))|(do\(\))|(don't\(\))`)
+	for _, instruction := range re.FindAllString(memory, -1) {
+		instructions = append(instructions, instruction)
+	}
+
+	return instructions
+}
+
 func execute_instruction(instruction string) (int) {
 	re := regexp.MustCompile(`\d+`)
 	values := re.FindAllString(instruction, 2)
@@ -44,14 +53,17 @@ func execute_instruction(instruction string) (int) {
 	return value_left * value_right
 }
 
-func process_memory(debug bool, memory []string) (int) {
+func process_memory(debug bool, scan_mem_fn func(string) ([]string),
+	memory []string) (int) {
+
 	var output = 0
+	var dont_flag = false
 	for _, segment := range memory {
 		if debug {
 			fmt.Println("Memory Segment:\n", segment)
 		}
 
-		instructions := scan_memory(segment)
+		instructions := scan_mem_fn(segment)
 		if debug {
 			fmt.Println("Parsed Instructions:\n", instructions)
 		}
@@ -60,9 +72,19 @@ func process_memory(debug bool, memory []string) (int) {
 			fmt.Print("Executed:")
 		}
 		for _, instruction := range instructions {
-			output += execute_instruction(instruction)
-			if debug {
-				fmt.Print(" ", execute_instruction(instruction))
+
+			if instruction == "don't()" {
+				dont_flag = true
+			} else if instruction == "do()" {
+				dont_flag = false
+			} else {
+				if dont_flag == false {
+					output += execute_instruction(instruction)
+
+					if debug {
+						fmt.Print(" ", execute_instruction(instruction))
+					}
+				}
 			}
 		}
 		if debug {
@@ -73,7 +95,11 @@ func process_memory(debug bool, memory []string) (int) {
 }
 
 func part_1(memory []string) (int) {
-	return process_memory(false, memory)
+	return process_memory(false, scan_memory, memory)
+}
+
+func part_2(memory []string) (int) {
+	return process_memory(false, scan_memory_all_instructions, memory)
 }
 
 func main() {
@@ -86,6 +112,13 @@ func main() {
 	fmt.Println("Part 1 - Executed Valid Memory")
 	fmt.Println(value)
 
+	timer_stop = util.Timer()
+	value = part_2(memory)
+	var part_2_elapsed = timer_stop()
+	fmt.Println("\nPart 2 - Executed Valid Memory, All Instructions")
+	fmt.Println(value)
+
 	fmt.Println("\n----")
 	fmt.Printf("Part 1 completed %v\n", part_1_elapsed)
+	fmt.Printf("Part 2 completed %v\n", part_2_elapsed)
 }

@@ -1,0 +1,9 @@
+Part 1 - Executed Valid Memory
+175700056
+
+Part 2 - Executed Valid Memory, All Instructions
+71668682
+
+----
+Part 1 completed 989.967µs
+Part 2 completed 1.060289ms
