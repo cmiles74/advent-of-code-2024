@@ -2,7 +2,6 @@ package main
 
 import ("bufio"
 	"fmt"
-	"os"
 	"sort"
 	"strconv"
 	"strings"
@@ -13,36 +12,27 @@ func load_sample() ([]int, []int){
 }
 
 func load_input(filename string) ([]int, []int) {
-	file, error := os.Open(filename)
-	if error != nil {
-		panic(error)
-	}
-	defer file.Close()
-
 	var list_1 = []int{}
 	var list_2 = []int{}
 
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		values := strings.Fields(scanner.Text())
+	util.LoadTextFile(filename, func (scanner *bufio.Scanner) {
+		for scanner.Scan() {
+			values := strings.Fields(scanner.Text())
 
-		value_1, error_1 := strconv.Atoi(values[0])
-		value_2, error_2 := strconv.Atoi(values[1])
-		if error_1 != nil || error_2 != nil {
-			if error_1 != nil {
-				panic(error_1)
-			} else if error_2 != nil {
-				panic(error_2)
+			value_1, error_1 := strconv.Atoi(values[0])
+			value_2, error_2 := strconv.Atoi(values[1])
+			if error_1 != nil || error_2 != nil {
+				if error_1 != nil {
+					panic(error_1)
+				} else if error_2 != nil {
+					panic(error_2)
+				}
 			}
+
+			list_1 = append(list_1, value_1)
+			list_2 = append(list_2, value_2)
 		}
-
-		list_1 = append(list_1, value_1)
-		list_2 = append(list_2, value_2)
-	}
-
-	if error := scanner.Err(); error != nil {
-		panic(error)
-	}
+	})
 
 	return list_1, list_2
 }

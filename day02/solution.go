@@ -2,7 +2,6 @@ package main
 
 import ("bufio"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 	"cmiles74/util")
@@ -18,23 +17,18 @@ func load_sample() ([][]int) {
 }
 
 func load_input(filename string) ([][]int) {
-	file, error := os.Open(filename)
-	if error != nil {
-		panic(error)
-	}
-	defer file.Close()
-
 	var reports = [][]int{}
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		levels := strings.Fields(scanner.Text())
-		var report = []int{}
-		for _, level := range levels {
-			level_int, _ := strconv.Atoi(level)
-			report = append(report, level_int)
+	util.LoadTextFile(filename, func (scanner *bufio.Scanner) {
+		for scanner.Scan() {
+			levels := strings.Fields(scanner.Text())
+			var report = []int{}
+			for _, level := range levels {
+				level_int, _ := strconv.Atoi(level)
+				report = append(report, level_int)
+			}
+			reports = append(reports, report)
 		}
-		reports = append(reports, report)
-	}
+	})
 
 	return reports
 }

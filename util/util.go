@@ -1,6 +1,8 @@
 package util
 
-import ("fmt"
+import ("bufio"
+	"fmt"
+	"os"
 	"time")
 
 func Timer(name string) func() {
@@ -15,5 +17,20 @@ func AbsDiff(x int, y int) (int) {
 		return y - x
 	} else {
 		return x - y
+	}
+}
+
+func LoadTextFile(filename string, scanner_fn func(*bufio.Scanner)) {
+	file, error := os.Open(filename)
+	if error != nil {
+		panic(error)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	scanner_fn(scanner)
+
+	if error := scanner.Err(); error != nil {
+		panic(error)
 	}
 }
