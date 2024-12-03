@@ -1,0 +1,9 @@
+Part 1 - Number of Safe Reports
+502
+
+Part 2 - Number of Safe Reports with Dampener
+544
+
+----
+Part 2 completed 192.34µs
+Part 1 completed 239.279µs

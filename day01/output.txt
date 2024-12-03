@@ -1,0 +1,9 @@
+Part 1 - Sum of Distances:
+2742123
+
+Part 2 - Sum of Occurences:
+21328497
+
+----
+Part 2 completed 517.661µs
+Part 1 completed 1.052444ms
