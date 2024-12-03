@@ -53,14 +53,6 @@ func sort_list(list []int) {
 	})
 }
 
-func abs_diff(x int, y int) (int) {
-	if (x < y) {
-		return y - x
-	} else {
-		return x - y
-	}
-}
-
 func count_occurs(sorted_list []int, search_value int) (int) {
 	occurs := 0
 	for _, value := range sorted_list {
@@ -85,7 +77,7 @@ func part_1() {
 	for index, value := range list_1 {
 		value_1 := value
 		value_2 := list_2[index]
-		sum_distance += abs_diff(value_1, value_2)
+		sum_distance += util.AbsDiff(value_1, value_2)
 	}
 
 	fmt.Println(sum_distance)
