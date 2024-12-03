@@ -1,14 +1,13 @@
 package util
 
 import ("bufio"
-	"fmt"
 	"os"
 	"time")
 
-func Timer(name string) func() {
+func Timer() func() (time.Duration) {
 	start := time.Now()
-	return func() {
-		fmt.Printf("%s completed %v\n", name, time.Since(start))
+	return func() (time.Duration) {
+		return time.Since(start)
 	}
 }
 

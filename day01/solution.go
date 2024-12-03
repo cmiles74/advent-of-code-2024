@@ -57,9 +57,7 @@ func count_occurs(sorted_list []int, search_value int) (int) {
 	return occurs
 }
 
-func part_1() {
-	//list_1, list_2 := load_sample()
-	list_1, list_2 := load_input("input.txt")
+func part_1(list_1 []int, list_2 []int) {
 	sort_list(list_1)
 	sort_list(list_2)
 
@@ -73,9 +71,7 @@ func part_1() {
 	fmt.Println(sum_distance)
 }
 
-func part_2() {
-	//list_1, list_2 := load_sample()
-	list_1, list_2 := load_input("input.txt")
+func part_2(list_1 []int, list_2 []int) {
 	sort_list(list_2)
 
 	sum_occurs := 0
@@ -87,12 +83,20 @@ func part_2() {
 }
 
 func main() {
+	//list_1, list_2 := load_sample()
+	list_1, list_2 := load_input("input.txt")
+
 	fmt.Println("Part 1 - Sum of Distances:")
-	defer util.Timer("Part 1")()
-	part_1()
+	timer_stop := util.Timer()
+	part_1(list_1, list_2)
+	var part_1_elapsed = timer_stop()
 
 	fmt.Println("\nPart 2 - Sum of Occurences:")
-	defer util.Timer("Part 2")()
-	part_2()
+	timer_stop = util.Timer()
+	part_2(list_1, list_2)
+	var part_2_elapsed = timer_stop()
+
 	fmt.Println("\n----")
+	fmt.Printf("Part 1 completed %v\n", part_1_elapsed)
+	fmt.Printf("Part 2 completed %v\n", part_2_elapsed)
 }

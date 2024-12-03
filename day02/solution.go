@@ -135,17 +135,6 @@ func report_dampener_safe(debug bool, report []int) (bool) {
 	return safe
 }
 
-func num_dampener_safe_reports(debug bool, reports [][]int) (int) {
-	var num_safe = 0
-	for _, report := range reports {
-		if report_dampener_safe(debug, report) {
-			num_safe += 1
-		}
-	}
-
-	return num_safe
-}
-
 func num_safe_reports(debug bool, reports [][]int) (int) {
 	var num_safe = 0
 	for _, report := range reports {
@@ -157,20 +146,34 @@ func num_safe_reports(debug bool, reports [][]int) (int) {
 	return num_safe
 }
 
+func num_dampener_safe_reports(debug bool, reports [][]int) (int) {
+	var num_safe = 0
+	for _, report := range reports {
+		if report_dampener_safe(debug, report) {
+			num_safe += 1
+		}
+	}
+
+	return num_safe
+}
 
 func main() {
 	//reports := load_sample()
 	reports := load_input("input.txt")
 
-	defer util.Timer("Part 1")()
+	timer_stop := util.Timer()
 	var num_safe = num_safe_reports(false, reports)
+	var part_1_elapsed = timer_stop()
 	fmt.Println("Part 1 - Number of Safe Reports")
 	fmt.Println(num_safe)
 
-	defer util.Timer("Part 2")()
+	timer_stop = util.Timer()
 	var num_dampener_safe = num_dampener_safe_reports(false, reports)
+	var part_2_elapsed = timer_stop()
 	fmt.Println("\nPart 2 - Number of Safe Reports with Dampener")
 	fmt.Println(num_dampener_safe)
 
 	fmt.Println("\n----")
+	fmt.Printf("Part 1 completed %v\n", part_1_elapsed)
+	fmt.Printf("Part 2 completed %v\n", part_2_elapsed)
 }
