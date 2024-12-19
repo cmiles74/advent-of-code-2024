@@ -84,7 +84,7 @@ func part_2(list_1 []int, list_2 []int) {
 
 func main() {
 	//list_1, list_2 := load_sample()
-	list_1, list_2 := load_input("input.txt")
+	list_1, list_2 := load_input("../input.txt")
 
 	fmt.Println("Part 1 - Sum of Distances:")
 	timer_stop := util.Timer()
